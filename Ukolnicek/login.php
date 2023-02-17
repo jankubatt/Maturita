@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style.scss">
-    <title>Login system</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.scss">
+  <title>Login system</title>
 </head>
-<body class="align-items-center justify-content-around d-flex">
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-        <label>Jmeno</label>
-        <input class="form-control" type="text" name="username" required/>
 
-        <label>Heslo</label>
-        <input class="form-control" type="text" name="password" required/><br>
+<body>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <label>Jmeno</label>
+    <input type="text" name="username" required />
 
-        <button class="btn btn-light w-100" type="submit">Submit</button>
-    </form>
+    <label>Heslo</label>
+    <input type="text" name="password" required /><br>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <button type="submit">Submit</button>
+  </form>
+
 </body>
+
 </html>
 
 <?php
@@ -47,14 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
       if (password_verify($pass, $row["password"])) {
         $token = md5(uniqid($user, true));
         $id = $row["id"];
         $sql = "UPDATE users SET authToken='$token' WHERE id='$id';";
         $conn->query($sql);
         setcookie("log", $token, time() + (86400 * 30), "/");
-        header('Location: '."homepage.php");
+        header('Location: ' . "homepage.php");
         exit();
       } else {
         echo "Špatné heslo";
@@ -67,7 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 
-function test_input($data) {
+function test_input($data)
+{
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);

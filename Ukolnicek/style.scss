@@ -1,124 +1,123 @@
-
 body {
-    background-color: rgb(47, 33, 56);
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100vh;
-    margin: 0;
+  background-color: #2f2138;
+  color: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  margin: 0;
 }
 
 #main {
-    display: flex;
-    align-items: center;
-    flex-flow: column;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
 }
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 999; /* Sit on top */
-    width: 100vw;
-    height: 100vh;
-    top: 40%;
-    left: 34%;
+  display: none; /* Hidden by default */
+  height: 100vh;
+  left: 34%;
+  position: fixed; /* Stay in place */
+  top: 40%;
+  width: 100vw;
+  z-index: 999; /* Sit on top */
 }
 
 .modal-content {
-    padding: 20px;
-    width: 30vw;
-    min-height: 10vh;
-    background-color: white;
-    color: black;
-    border-radius: 5px;
-    z-index: 1000;
-    border: 1px solid grey;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #000;
+  min-height: 10vh;
+  padding: 20px;
+  width: 30vw;
+  z-index: 1000;
 }
 
 .buttons {
-    flex-flow: row;
-    display: flex;
+  display: flex;
+  flex-flow: row;
 }
 
 .buttons > * {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 #tasks {
-    width: 85vh;
-    height: 80vh;
-    background-color: white;
-    color: black;
-    border-radius: 5px;
-    padding: 20px;
-    overflow-y: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  color: #000;
+  height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  width: 85vh;
 }
 
 #top-panel {
-    padding: 20px;
-    margin: 10px 0 10px 0;
-    width: 85vh;
-    background-color: white;
-    color: black;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
+  background-color: #fff;
+  border-radius: 5px;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 20px;
+  width: 85vh;
 }
 
 .task {
-    background-color: rgb(47, 33, 56);
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    display: flex;
-    flex-flow: column;
-    min-width: 20%;
+  background-color: #2f2138;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 5px;
+  min-width: 20%;
+  padding: 10px;
 }
 
 .task-name {
-    font-size: larger;
-    font-weight: bold;
-    justify-content: space-between;
-    flex-flow: row;
-    display: flex;
+  display: flex;
+  flex-flow: row;
+  font-size: larger;
+  font-weight: bold;
+  justify-content: space-between;
 }
 
 .task-date {
-    align-self: flex-end;
-    color: grey;
-    font-style: italic;
+  align-self: flex-end;
+  color: #999;
+  font-style: italic;
 }
 
 .task-delete {
-    color: rgba(255,0,0,0.5);
-    cursor: pointer;
+  color: rgba(255, 0, 0, 0.5);
+  cursor: pointer;
 }
 
 h1 {
-    margin: 0;
-    background-color: rgb(47, 33, 56);
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-
+  background-color: #2f2138;
+  border-radius: 5px;
+  color: #fff;
+  margin: 0;
+  padding: 10px;
 }
 
-textarea, input {
-    border: 1px solid rgb(47, 33, 56);
-    border-radius: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    width: 100%;
-    font-size: 1.2em;
+textarea,
+input {
+  border: 1px solid #2f2138;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  padding: 5px;
+  width: 100%;
 }
 
 button {
-    background-color: rgb(47, 33, 56);
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: larger;
-    font-weight: bold;
-    border: none;
+  background-color: #2f2138;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: larger;
+  font-weight: bold;
+  padding: 5px;
 }
