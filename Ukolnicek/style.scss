@@ -1,0 +1,124 @@
+
+body {
+    background-color: rgb(47, 33, 56);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    margin: 0;
+}
+
+#main {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 999; /* Sit on top */
+    width: 100vw;
+    height: 100vh;
+    top: 40%;
+    left: 34%;
+}
+
+.modal-content {
+    padding: 20px;
+    width: 30vw;
+    min-height: 10vh;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    z-index: 1000;
+    border: 1px solid grey;
+}
+
+.buttons {
+    flex-flow: row;
+    display: flex;
+}
+
+.buttons > * {
+    margin-left: 5px;
+}
+
+#tasks {
+    width: 85vh;
+    height: 80vh;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#top-panel {
+    padding: 20px;
+    margin: 10px 0 10px 0;
+    width: 85vh;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task {
+    background-color: rgb(47, 33, 56);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-flow: column;
+    min-width: 20%;
+}
+
+.task-name {
+    font-size: larger;
+    font-weight: bold;
+    justify-content: space-between;
+    flex-flow: row;
+    display: flex;
+}
+
+.task-date {
+    align-self: flex-end;
+    color: grey;
+    font-style: italic;
+}
+
+.task-delete {
+    color: rgba(255,0,0,0.5);
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+    background-color: rgb(47, 33, 56);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+
+textarea, input {
+    border: 1px solid rgb(47, 33, 56);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 100%;
+    font-size: 1.2em;
+}
+
+button {
+    background-color: rgb(47, 33, 56);
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: larger;
+    font-weight: bold;
+    border: none;
+}
