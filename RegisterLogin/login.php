@@ -15,7 +15,7 @@
         <input class="form-control" type="text" name="username" required/>
 
         <label>Heslo</label>
-        <input class="form-control" type="text" name="password" required/><br>
+        <input class="form-control" type="password" name="password" required/><br>
 
         <button class="btn btn-light w-100" type="submit">Submit</button>
     </form>
