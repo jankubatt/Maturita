@@ -33,7 +33,8 @@ if (!isset($_COOKIE["login"])) {
 
     <div class="container d-flex flex-wrap justify-content-center">
         <?php
-            $sql = "SELECT * FROM categories ORDER BY name ASC";
+            $category = $_GET["category"];
+            $sql = "SELECT * FROM products WHERE category='$category'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
