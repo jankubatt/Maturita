@@ -4,6 +4,18 @@ if (!isset($_COOKIE["login"])) {
   header("Location: " . "index.html");
   exit();
 }
+
+$token = $_COOKIE["login"];
+$id_user = 69;
+$sql = "SELECT id FROM users WHERE token='$token'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              // output data of each row
+              while ($row = $result->fetch_assoc()) {
+$id_user = $row["id"];
+
+              }}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +38,15 @@ if (!isset($_COOKIE["login"])) {
         <a class="navbar-brand">ESHOP</a>
         <a href="./homepage.php" class="nav-item">Kategorie</a>
         <div class="d-flex">
-            <a href="./cart.php">Cart</a>
+            <a href="./cart.php">Cart</a><?php 
+            $sql = "SELECT COUNT(id) AS count FROM cart WHERE id_user='$id_user'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              // output data of each row
+              while ($row = $result->fetch_assoc()) { 
+                echo $row["count"];
+              }}?>
         </div>
     </div>
     </nav>

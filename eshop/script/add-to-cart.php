@@ -2,12 +2,16 @@
 
 require_once "conn.php";
 
-$id_product = $_GET["id"];
-$token = $_GET["token"];
+$id_product = $_POST["id"];
+$token = $_POST["token"];
 $random = uniqid();
 
 header("Cache-Control: no-cache, must-revalidate");
-header("Location: ../homepage.php?timestamp=" . time() . "&rnd=".$random."");
+header('Content-type: text/html; charset=utf-8');
+header('Expires: Mon, 20 Dec 1998 01:00:00 GMT');
+header('Last-Modified: '.gmdate('D, d M Y H:i:s').'GMT');
+header('Cache-Control: no-cache, must-revalidate');
+header('Pragma: no-cache');
 
 $sql = "SELECT id FROM users WHERE token=?";
 $stmt = $conn->prepare($sql);

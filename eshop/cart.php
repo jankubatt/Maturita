@@ -106,6 +106,7 @@ if ($result->num_rows > 0) {
 
                         <?php
                         $count = 1;
+                        $prev_id = 0;
                         $prev_name = "";
                         $prev_price = "";
                         $prev_count = 0;
@@ -118,11 +119,12 @@ if ($result->num_rows > 0) {
                             } else {
                                 // output the previous item, if it exists
                                 if ($prev_name != "") {
-                                    echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "</td><td><img height='100' src='./product.webp' alt='product'></td></tr>";
+                                    echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "<a href='#' class='add-to-cart' data-id=".$prev_id." data-token=".$token.">+</a></td><td><img height='100' src='./product.webp' alt='product'></td></tr>";
                                     $count++;
                                 }
                         
                                 // save the current item as the previous item
+                                $prev_id = $value["id"];
                                 $prev_name = $value["name"];
                                 $prev_price = $value["price"];
                                 $prev_count = 1;
@@ -131,7 +133,7 @@ if ($result->num_rows > 0) {
                         
                         // output the last item
                         if ($prev_name != "") {
-                            echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "</td><td><img height='100' src='./product.webp' alt='product'></td></tr>";
+                            echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "<a href='#' class='add-to-cart' data-id=".$prev_id." data-token=".$token.">+</a></td><td><img height='100' src='./product.webp' alt='product'></td></tr>";
                         }
                         ?>
                     </tbody>
@@ -145,6 +147,26 @@ if ($result->num_rows > 0) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+  $(".add-to-cart").click(function(e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    var token = $(this).data("token");
+    $.ajax({
+      url: "./script/add-count.php",
+      method: "POST",
+      data: { id: id, token: token },
+      success: function() {
+        // Refresh the page to update the cart
+        location.reload();
+      }
+    });
+  });
+});
+</script>
+
 </body>
 
 </html>
