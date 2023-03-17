@@ -33,7 +33,9 @@ if (!isset($_COOKIE["login"])) {
 
     <div class="container d-flex flex-wrap justify-content-center">
         <?php
-            $sql = "SELECT * FROM categories ORDER BY name ASC";
+            $category = $_GET["category"];
+            $product = $_GET["product"];
+            $sql = "SELECT products.*, categories.name AS c_name FROM products JOIN categories ON products.category = categories.id WHERE products.id='$product'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -42,21 +44,9 @@ if (!isset($_COOKIE["login"])) {
                 $timestamp = time();
                 $random = uniqid();
                 echo '
-                  
-                    <a href="./products.php?category='.$row["id"].'">
-                    <div class="card m-2" style="width: 18rem;">
-                <img src="./product.webp" class="card-img-top" alt="product">
-                <div class="card-body">
-                    <h5 class="card-title">' .
-                  $row["name"] .
-                  '</h5>
-                    <div class="d-flex justify-content-between">
-                    </div>
-                    
-                </div>
-                </div>
-                </a>
-                    ';
+                <a href="./homepage.php" class="nav-item">Kategorie</a> / <a href="./products.php?category='.$category.'">'.$row["c_name"].'</a>
+                aha toto je produkt: '.$row["name"].'<br/>
+                <a class="btn btn-primary" href="./script/add-to-cart.php?id=' .$row["id"] ."&token=" .$_COOKIE["login"] .'&timestamp='.$timestamp.'&rnd='.$random.'">Do kosiku</a>';
               }
             }
             ?>

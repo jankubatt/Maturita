@@ -14,7 +14,7 @@
     - Grid
     - Name, description (160 chars), price with tax, price without tax
     - Detail after click, to cart button
-    - Link with category
+        - Link with category
 
 - Cart
     - Number with products count

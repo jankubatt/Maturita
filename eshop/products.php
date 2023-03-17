@@ -24,7 +24,7 @@ if (!isset($_COOKIE["login"])) {
     <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand">ESHOP</a>
-        <a class="nav-item">Kategorie</a>
+        <a href="./homepage.php" class="nav-item">Kategorie</a>
         <div class="d-flex">
             <a href="./cart.php">Cart</a>
         </div>
@@ -44,13 +44,13 @@ if (!isset($_COOKIE["login"])) {
                 $random = uniqid();
                 echo '
                   
-                    <a href="/category?name='.$row["name"].'">
-                    <div class="card m-2" style="width: 18rem;">
+                    <a href="./product.php?category='.$category.'&product='.$row["id"].'">
+                    <div class="card m-2" style="width: 25rem;">
                 <img src="./product.webp" class="card-img-top" alt="product">
                 <div class="card-body">
                     <h5 class="card-title">' .
                   $row["name"] .
-                  '</h5>
+                  '</h5>'.$row["description"] . $row["price"] . $row["price_tax"] .'
                     <div class="d-flex justify-content-between">
                     </div>
                     
