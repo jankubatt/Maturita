@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Stř 08. bře 2023, 10:52
--- Verze serveru: 10.4.24-MariaDB
--- Verze PHP: 8.1.6
+-- Vytvořeno: Pát 17. bře 2023, 11:29
+-- Verze serveru: 10.4.27-MariaDB
+-- Verze PHP: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,34 +31,80 @@ CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_product` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `cart`
 --
 
 INSERT INTO `cart` (`id`, `id_user`, `id_product`) VALUES
-(51, 1, 1),
-(52, 1, 1),
-(53, 1, 1),
-(54, 1, 1),
-(55, 1, 2),
-(56, 1, 2),
-(57, 1, 3),
-(58, 1, 3),
-(59, 1, 1),
-(60, 1, 1),
-(61, 1, 1),
-(62, 1, 1),
-(76, 1, 1),
-(77, 1, 1),
-(78, 1, 1),
-(79, 1, 1),
-(80, 1, 2),
-(81, 1, 3),
-(82, 1, 1),
-(83, 1, 2),
-(84, 1, 2);
+(94, 1, 2),
+(95, 1, 2),
+(96, 1, 2),
+(97, 1, 2),
+(98, 1, 2),
+(99, 1, 2),
+(100, 1, 2),
+(101, 1, 2),
+(102, 1, 3),
+(103, 1, 4),
+(104, 1, 4),
+(105, 1, 4),
+(106, 1, 4),
+(107, 1, 4),
+(108, 1, 3),
+(109, 1, 2),
+(110, 1, 4),
+(111, 1, 4),
+(112, 1, 3),
+(113, 1, 3),
+(114, 1, 3),
+(115, 1, 3),
+(116, 1, 3),
+(117, 1, 3),
+(118, 1, 2),
+(119, 1, 4),
+(120, 1, 4),
+(121, 1, 2),
+(122, 1, 2),
+(123, 1, 2),
+(124, 1, 2),
+(125, 1, 2),
+(126, 1, 3),
+(127, 1, 4),
+(128, 1, 4),
+(129, 1, 1),
+(130, 1, 1),
+(131, 1, 1),
+(132, 1, 2),
+(133, 1, 3),
+(134, 1, 5),
+(135, 1, 5),
+(136, 1, 5),
+(137, 1, 4),
+(138, 1, 4),
+(139, 1, 4),
+(140, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Vypisuji data pro tabulku `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Elektronika'),
+(2, 'Obleceni'),
+(3, 'Pecivo');
 
 -- --------------------------------------------------------
 
@@ -69,17 +115,22 @@ INSERT INTO `cart` (`id`, `id_user`, `id_product`) VALUES
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `price` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `price` int(50) NOT NULL,
+  `category` int(11) NOT NULL,
+  `description` varchar(160) NOT NULL,
+  `price_tax` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`) VALUES
-(1, 'Adam', 100),
-(2, 'Eve', 200),
-(3, 'Jesus', 300);
+INSERT INTO `products` (`id`, `name`, `price`, `category`, `description`, `price_tax`) VALUES
+(1, 'Adam', 100, 1, 'lmao', 0),
+(2, 'Eve', 200, 1, 'ty', 0),
+(3, 'Jesus', 300, 1, 'jsi', 0),
+(4, 'asdf', 1, 1, 'gej', 0),
+(5, 'fdasf', 123123, 1, 'asfaadsf', 123123);
 
 -- --------------------------------------------------------
 
@@ -92,14 +143,14 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `token`) VALUES
-(1, 'asdf', '$2y$10$Bn6saLaFo.eIYzK3RUqsN.Ulxm68RKAXQaPtymB32xsEJpGF21m2e', 'c8c027ab5d15333108ed0eb0e0a79427');
+(1, 'asdf', '$2y$10$Bn6saLaFo.eIYzK3RUqsN.Ulxm68RKAXQaPtymB32xsEJpGF21m2e', '51ce18c8075a5b00408fe09074e5b4e2');
 
 --
 -- Indexy pro exportované tabulky
@@ -114,10 +165,17 @@ ALTER TABLE `cart`
   ADD KEY `idproduct` (`id_product`);
 
 --
+-- Indexy pro tabulku `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexy pro tabulku `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cacat` (`category`);
 
 --
 -- Indexy pro tabulku `users`
@@ -133,13 +191,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pro tabulku `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+
+--
+-- AUTO_INCREMENT pro tabulku `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pro tabulku `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pro tabulku `users`
@@ -157,6 +221,12 @@ ALTER TABLE `users`
 ALTER TABLE `cart`
   ADD CONSTRAINT `idproduct` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `iduser` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
+
+--
+-- Omezení pro tabulku `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `cacat` FOREIGN KEY (`category`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
