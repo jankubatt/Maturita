@@ -1,9 +1,21 @@
 <?php
-require_once "./script/conn.php";
+require_once "../script/conn.php";
 if (!isset($_COOKIE["login"])) {
   header("Location: " . "index.html");
   exit();
 }
+
+$token = $_COOKIE["login"];
+$id_user = 69;
+$sql = "SELECT id FROM users WHERE token='$token'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              // output data of each row
+              while ($row = $result->fetch_assoc()) {
+$id_user = $row["id"];
+
+              }}
 ?>
 
 <!DOCTYPE html>
@@ -17,24 +29,31 @@ if (!isset($_COOKIE["login"])) {
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
-    <title>Login system</title>
+    <title>EShop</title>
 </head>
 
 <body>
     <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand">ESHOP</a>
+        <a class="navbar-brand">EShop</a>
         <a href="./homepage.php" class="nav-item">Kategorie</a>
         <div class="d-flex">
-            <a href="./cart.php">Cart</a>
+            <a href="./cart.php">Cart</a><?php 
+            $sql = "SELECT COUNT(id) AS count FROM cart WHERE id_user='$id_user'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              // output data of each row
+              while ($row = $result->fetch_assoc()) { 
+                echo $row["count"];
+              }}?>
         </div>
     </div>
     </nav>
 
     <div class="container d-flex flex-wrap justify-content-center">
         <?php
-            $category = $_GET["category"];
-            $sql = "SELECT * FROM products WHERE category='$category'";
+            $sql = "SELECT * FROM categories ORDER BY name ASC";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -44,13 +63,13 @@ if (!isset($_COOKIE["login"])) {
                 $random = uniqid();
                 echo '
                   
-                    <a href="./product.php?category='.$category.'&product='.$row["id"].'">
-                    <div class="card m-2" style="width: 25rem;">
-                <img src="./product.webp" class="card-img-top" alt="product">
+                    <a href="./products.php?category='.$row["id"].'">
+                    <div class="card m-2" style="width: 18rem;">
+                <img src="../img/product.webp" class="card-img-top" alt="product">
                 <div class="card-body">
                     <h5 class="card-title">' .
                   $row["name"] .
-                  '</h5>'.$row["description"] . $row["price"] . $row["price_tax"] .'
+                  '</h5>
                     <div class="d-flex justify-content-between">
                     </div>
                     

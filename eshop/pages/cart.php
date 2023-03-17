@@ -1,5 +1,5 @@
 <?php
-require_once "./script/conn.php";
+require_once "../script/conn.php";
 if (!isset($_COOKIE["login"])) {
   header("Location: " . "index.html");
   exit();
@@ -40,33 +40,29 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <title>Login system</title>
+    <title>EShop</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="./homepage.php">Eshop</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./homepage.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="./cart.php">Cart</a>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand">EShop</a>
+        <a href="./homepage.php" class="nav-item">Kategorie</a>
+        <div class="d-flex">
+            <a href="./cart.php">Cart</a><?php 
+            $sql = "SELECT COUNT(id) AS count FROM cart WHERE id_user='$id'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              // output data of each row
+              while ($row = $result->fetch_assoc()) { 
+                echo $row["count"];
+              }}?>
         </div>
+    </div>
     </nav>
 
     <div class="container">
@@ -119,7 +115,7 @@ if ($result->num_rows > 0) {
                             } else {
                                 // output the previous item, if it exists
                                 if ($prev_name != "") {
-                                    echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "<a href='#' class='add-to-cart' data-id=".$prev_id." data-token=".$token.">+</a></td><td><img height='100' src='./product.webp' alt='product'></td></tr>";
+                                    echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "<a href='#' class='add-to-cart' data-id=".$prev_id." data-token=".$token.">+</a></td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
                                     $count++;
                                 }
                         
@@ -133,7 +129,7 @@ if ($result->num_rows > 0) {
                         
                         // output the last item
                         if ($prev_name != "") {
-                            echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "<a href='#' class='add-to-cart' data-id=".$prev_id." data-token=".$token.">+</a></td><td><img height='100' src='./product.webp' alt='product'></td></tr>";
+                            echo "<tr><th>" . $count . "</th><td>" . $prev_name . "</td><td>" . $prev_price . "</td><td>" . $prev_count . "<a href='#' class='add-to-cart' data-id=".$prev_id." data-token=".$token.">+</a></td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
                         }
                         ?>
                     </tbody>
@@ -155,7 +151,7 @@ $(document).ready(function() {
     var id = $(this).data("id");
     var token = $(this).data("token");
     $.ajax({
-      url: "./script/add-count.php",
+      url: "../script/add-count.php",
       method: "POST",
       data: { id: id, token: token },
       success: function() {
