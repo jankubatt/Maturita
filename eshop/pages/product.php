@@ -32,13 +32,26 @@ $id_user = $row["id"];
     <title>EShop</title>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100" style="height: 100vh !important;">
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand">EShop</a>
-        <a href="./homepage.php" class="nav-item">Kategorie</a>
-        <div class="d-flex">
-            <a href="./cart.php">Cart</a><?php 
+     
+      <a class="navbar-brand">EShop</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        <a href="./homepage.php" class="nav-link">Kategorie</a>
+
+        </li>
+            </ul>
+        
+        <div class="">
+            <a class="btn btn-light" href="./cart.php">
+            
+  <i class="fa-solid fa-cart-shopping">
+
+            
+            </i>
+            <span class="badge rounded-pill bg-dark"><?php 
             $sql = "SELECT COUNT(id) AS count FROM cart WHERE id_user='$id_user'";
             $result = $conn->query($sql);
 
@@ -46,8 +59,11 @@ $id_user = $row["id"];
               // output data of each row
               while ($row = $result->fetch_assoc()) { 
                 echo $row["count"];
-              }}?>
+              }}?></span>
+          </a>
+            
         </div>
+        
     </div>
     </nav>
 
@@ -73,9 +89,11 @@ $id_user = $row["id"];
 
     </div>
 
-    <div class="footer h-100 bg-dark">
-        <p>Ahoj</p>
-    </div>
+    <footer class="footer mt-auto py-3 bg-dark">
+  <div class="container">
+    <span class="text-light">Honza</span>
+  </div>
+</footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
