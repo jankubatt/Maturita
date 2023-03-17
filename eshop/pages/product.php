@@ -72,26 +72,26 @@ if ($result->num_rows > 0) {
 			if ($result->num_rows > 0) {
 				// output data of each row
 				while ($row = $result->fetch_assoc()) {
-					$timestamp = time();
-					$random = uniqid();
-					echo '
-						<a href="./homepage.php" class="nav-item">Kategorie</a> / <a href="./products.php?category=' .
-					$category .
-					'">' .
-					$row["c_name"] .
-					'</a>
-						aha toto je produkt: ' .
-					$row["name"] .
-					'<br/>
-						<a href="#" class="add-to-cart" data-id=' .
-					$row["id"] .
-					" data-token=" .
-					$_COOKIE["login"] .
-					">Do kosiku</a>";
+					$product_id = $row["id"];
+					$product_name = $row["name"];
+					$product_description = $row["description"];
+					$product_price = $row["price"];
+					echo '<a href="./homepage.php" class="nav-item">Kategorie</a> / <a href="./products.php?category='.$category.'">'.$row["c_name"].'</a>';
 				}
 			}
         ?>
     </div>
+
+	<div class="d-flex justify-content-center flex-row h-50 w-50">
+			<img src="../img/product.webp" alt="product"/>
+			<div class="mx-5">
+				<h1><?php echo $product_name ?></h1>
+				<p><?php echo $product_description ?></p>
+				<h2><?php echo $product_price ?>Kč</h2>
+				<small>(<?php echo $product_price + ($product_price * 0.21) ?>Kč s DPH)</small>
+				<div><a href="#" class="btn btn-light add-to-cart" data-id="<?php echo $product_id ?>" data-token="<?php echo $_COOKIE["login"]?>">Do kosiku</a></div>
+			</div>
+	</div>
 
     <footer class="footer mt-auto py-3 bg-dark">
         <div class="container">

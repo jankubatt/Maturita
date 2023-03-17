@@ -71,21 +71,27 @@ if ($result->num_rows > 0) {
 			if ($result->num_rows > 0) {
 				// output data of each row
 				while ($row = $result->fetch_assoc()) {
-					$timestamp = time();
-					$random = uniqid();
+					$product_id = $row["id"];
+					$product_name = $row["name"];
+					$product_description = $row["description"];
+					$product_price = $row["price"];
 					echo '
-						<a class="text-decoration-none text-dark" href="./product.php?category='.$category."&product=".$row["id"].'">
-							<div class="card m-2" style="width: 18rem;">
-								<img src="../img/product.webp" class="card-img-top" alt="product">
-								<div class="card-body">
-									<h5 class="card-title">'.$row["name"].'</h5>
-									<p class="card-text text-muted">'.$row["description"].'</p>
-									<a href="#" class="add-to-cart btn btn-light w-100 float-right" data-id='.$row["id"]." data-token=".$_COOKIE["login"].'>
-										Do košíku
-									</a>
-								</div>
-							</div>
-						</a>
+					<a class="text-decoration-none text-dark" href="./product.php?category='.$category."&product=".$row["id"].'">
+					<div class="card m-2" style="width: 18rem;">
+						
+						<img src="../img/product.webp" class="card-img-top"  alt="product"/>
+						<div class="card-body">
+						<div class="mx-5">
+							<h1>'.$product_name.'</h1>
+							<p>'.$product_description.'</p>
+							<h2>'.$product_price.'Kč</h2>
+							<small>('.$product_price + ($product_price * 0.21).'Kč s DPH)</small>
+							<div><a href="#" class="btn btn-light add-to-cart" data-id="'.$product_id.'" data-token="'.$_COOKIE["login"].'">Do kosiku</a></div>
+						</div>
+						</div>
+						
+					</div>
+				</a>
 					';
 				}
 			}
