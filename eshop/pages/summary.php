@@ -87,13 +87,28 @@ if ($result->num_rows > 0) {
                             <h1>Objednávka</h1>
                         </div>
                         <hr>
+                        <?php 
+                        $ordertoken = $_GET["order"];
+                            $sql = "SELECT * FROM orders WHERE id='$ordertoken'";
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0) {
+                              // output data of each row
+                              while ($row = $result->fetch_assoc()) {
+                                $shipping = "Doručit na adresu";
+                                if ($row["shipping"] == 1) {$shipping = "Vyzvednout na prodejně";}
+                                echo $row["name"] . "<br>" . $row["street"] . "<br>" . $row["house"] . "<br>" . $row["psc"] . "<br>" . $shipping . "<br>";
+                              }
+                            }
+                        ?>
+                        <hr/>
+                        <?php $price = 0; foreach ($products as $value) {$price += $value["price"];}  ?>
+                        <p><b>Cena:</b> <?php if ($shipping == "Doručit na adresu") {$price = $price + 129; echo $price;} else {echo $price;}?>Kč</p>
                         <p><b>Počet věcí:</b> <?php echo count($products); ?></p>
-                        <p><b>Cena:</b> <?php $price = 0; foreach ($products as $value) {$price += $value["price"];}echo $price;?>Kč</p>
                         <small><?php echo $price + ($price * 0.21) ?>Kč s DPH</small>
+                        <hr/>
                     </div>
                 </div>
-
-                <a href="./shipping.php" class="btn btn-dark w-100">Pokračovat na dopravu</a>
             </div>
             <div class="col">
                 <table class="table">
@@ -133,11 +148,7 @@ if ($result->num_rows > 0) {
 									$prev_price .
 									"</td><td>" .
 									$prev_count .
-									"<a href='#' class='add-to-cart' data-id=" .
-									$prev_id .
-									" data-token=" .
-									$token .
-									">+</a></td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
+									"</td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
 								$count++;
 								}
 
@@ -159,11 +170,7 @@ if ($result->num_rows > 0) {
 								$prev_price .
 								"</td><td>" .
 								$prev_count .
-								"<a href='#' class='add-to-cart' data-id=" .
-								$prev_id .
-								" data-token=" .
-								$token .
-								">+</a></td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
+								"</td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
 							}
                         ?>
                     </tbody>

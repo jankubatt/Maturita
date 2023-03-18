@@ -93,81 +93,40 @@ if ($result->num_rows > 0) {
                     </div>
                 </div>
 
-                <a href="./shipping.php" class="btn btn-dark w-100">Pokračovat na dopravu</a>
             </div>
             <div class="col">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Jméno</th>
-                            <th scope="col">Cena</th>
-                            <th scope="col">Počet</th>
-                            <th>Produkt</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-							$count = 1;
-							$prev_id = 0;
-							$prev_name = "";
-							$prev_price = "";
-							$prev_count = 0;
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Jméno a příjmení</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
 
-							foreach ($products as $value) {
-							// check if this item has the same name and price as the previous item
-							if (
-								$value["name"] == $prev_name &&
-								$value["price"] == $prev_price
-							) {
-								// increment the count of the previous item
-								$prev_count++;
-							} else {
-								// output the previous item, if it exists
-								if ($prev_name != "") {
-								echo "<tr><th>" .
-									$count .
-									"</th><td>" .
-									$prev_name .
-									"</td><td>" .
-									$prev_price .
-									"</td><td>" .
-									$prev_count .
-									"<a href='#' class='add-to-cart' data-id=" .
-									$prev_id .
-									" data-token=" .
-									$token .
-									">+</a></td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
-								$count++;
-								}
+                    <div class="mb-3">
+                        <label class="form-label">Ulice</label>
+                        <input type="text" class="form-control" name="street" required>
+                    </div>
 
-								// save the current item as the previous item
-								$prev_id = $value["id"];
-								$prev_name = $value["name"];
-								$prev_price = $value["price"];
-								$prev_count = 1;
-							}
-							}
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label">Číslo domu</label>
+                                <input type="text" class="form-control" name="house" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label">PSČ</label>
+                                <input type="text" class="form-control" name="psc" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="shipping">
+                        <label class="form-check-label">Vyzvednout na prodejně</label>
+                    </div>
 
-							// output the last item
-							if ($prev_name != "") {
-							echo "<tr><th>" .
-								$count .
-								"</th><td>" .
-								$prev_name .
-								"</td><td>" .
-								$prev_price .
-								"</td><td>" .
-								$prev_count .
-								"<a href='#' class='add-to-cart' data-id=" .
-								$prev_id .
-								" data-token=" .
-								$token .
-								">+</a></td><td><img height='100' src='../img/product.webp' alt='product'></td></tr>";
-							}
-                        ?>
-                    </tbody>
-                </table>
+                    <button type="submit" class="btn btn-dark w-100">Pokračovat na shrnutí</button>
+                </form>
             </div>
         </div>
     </div>
@@ -181,27 +140,42 @@ if ($result->num_rows > 0) {
 	<script src="https://kit.fontawesome.com/848da1e5f7.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".add-to-cart").click(function(e) {
-				e.preventDefault();
-				var id = $(this).data("id");
-				var token = $(this).data("token");
-				$.ajax({
-					url: "../script/add-count.php",
-					method: "POST",
-					data: { id: id, token: token },
-					success: function() {
-						// Refresh the page to update the cart
-						location.reload();
-					}
-				});
-			});
-		});
-	</script>
 </body>
 
 </html>
+
+<?php
+require_once "../script/conn.php";
+
+$name = $street = $house = $psc = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$name = test_input($_POST["name"]);
+	$street = test_input($_POST["street"]);
+	$house = test_input($_POST["house"]);
+	$psc = test_input($_POST["psc"]);
+    $shipping = $_POST["shipping"];
+    if ($shipping == "on") {$shipping = true;} else {$shipping = false;}
+    $price_tax = $price + ($price * 0.21);
+    $token = rand(100000, 999999);
+
+	$sql = "INSERT INTO orders (id, name, street, house, psc, shipping, id_user, price, price_tax) VALUES ('$token', '$name', '$street', '$house', '$psc', '$shipping', '$id', '$price', '$price_tax')";
+    if ($conn->query($sql) === true) {
+        header("Location: " . "./summary.php?order=" . $token);
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+function test_input($data)
+{
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+?>
 
 <?php $conn->close();
 ?>
