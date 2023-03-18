@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Pát 17. bře 2023, 11:29
+-- Vytvořeno: Sob 18. bře 2023, 08:58
 -- Verze serveru: 10.4.27-MariaDB
 -- Verze PHP: 8.1.12
 
@@ -38,53 +38,10 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `id_user`, `id_product`) VALUES
-(94, 1, 2),
-(95, 1, 2),
-(96, 1, 2),
-(97, 1, 2),
-(98, 1, 2),
-(99, 1, 2),
-(100, 1, 2),
-(101, 1, 2),
-(102, 1, 3),
-(103, 1, 4),
-(104, 1, 4),
-(105, 1, 4),
-(106, 1, 4),
-(107, 1, 4),
-(108, 1, 3),
-(109, 1, 2),
-(110, 1, 4),
-(111, 1, 4),
-(112, 1, 3),
-(113, 1, 3),
-(114, 1, 3),
-(115, 1, 3),
-(116, 1, 3),
-(117, 1, 3),
-(118, 1, 2),
-(119, 1, 4),
-(120, 1, 4),
-(121, 1, 2),
-(122, 1, 2),
-(123, 1, 2),
-(124, 1, 2),
-(125, 1, 2),
-(126, 1, 3),
-(127, 1, 4),
-(128, 1, 4),
-(129, 1, 1),
-(130, 1, 1),
-(131, 1, 1),
-(132, 1, 2),
-(133, 1, 3),
-(134, 1, 5),
-(135, 1, 5),
-(136, 1, 5),
-(137, 1, 4),
-(138, 1, 4),
-(139, 1, 4),
-(140, 1, 2);
+(141, 1, 1),
+(142, 1, 1),
+(143, 1, 2),
+(144, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -105,6 +62,37 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Elektronika'),
 (2, 'Obleceni'),
 (3, 'Pecivo');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `house` varchar(255) NOT NULL,
+  `psc` varchar(255) NOT NULL,
+  `shipping` tinyint(1) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `price_tax` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Vypisuji data pro tabulku `orders`
+--
+
+INSERT INTO `orders` (`id`, `name`, `street`, `house`, `psc`, `shipping`, `id_user`, `price`, `price_tax`) VALUES
+(1, 'asdf', 'asdf', '55', '55', 0, 1, 376083, 455060),
+(2, 'fff', 'fff', '5', '5', 0, 1, 376083, 455060),
+(3, 'fff', 'fff', '5', '5', 1, 1, 376083, 455060),
+(4, 'test', 'ano tohle je etest', '69', '666', 1, 1, 376083, 455060),
+(199155, 'asdfadsf', 'adfs', 'asdfa', '12', 0, 1, 600, 726),
+(427899, 'Honza Kubat', 'Oparno', '65', '41002', 1, 1, 600, 726),
+(989596, 'asdf', 'asdf', 'asdf', 'asdf', 1, 1, 376083, 455060);
 
 -- --------------------------------------------------------
 
@@ -171,6 +159,13 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexy pro tabulku `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user` (`id_user`);
+
+--
 -- Indexy pro tabulku `products`
 --
 ALTER TABLE `products`
@@ -191,13 +186,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pro tabulku `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT pro tabulku `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pro tabulku `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989597;
 
 --
 -- AUTO_INCREMENT pro tabulku `products`
@@ -221,6 +222,12 @@ ALTER TABLE `users`
 ALTER TABLE `cart`
   ADD CONSTRAINT `idproduct` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `iduser` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
+
+--
+-- Omezení pro tabulku `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Omezení pro tabulku `products`
