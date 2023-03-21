@@ -16,6 +16,8 @@ if ($result->num_rows > 0) {
 		$id_user = $row["id"];
 	}
 }
+
+$conn->query("SET NAMES 'utf8'");
 ?>
 
 <!DOCTYPE html>

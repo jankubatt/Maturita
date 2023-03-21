@@ -35,7 +35,7 @@
 
 <?php
 require_once "../script/conn.php";
-
+$conn->query("SET NAMES 'utf8'");
 $user = $pass = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

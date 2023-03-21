@@ -16,6 +16,8 @@ if ($result->num_rows > 0) {
 		$id_user = $row["id"];
 	}
 }
+
+$conn->query("SET NAMES 'utf8'");
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +79,7 @@ if ($result->num_rows > 0) {
 					$product_price = $row["price"];
 					echo '
 					<a class="text-decoration-none text-dark" href="./product.php?category='.$category."&product=".$row["id"].'">
-					<div class="card m-2" style="width: 18rem;">
+					<div class="card m-2" style="width: 25rem;">
 						
 						<img src="../img/product.webp" class="card-img-top"  alt="product"/>
 						<div class="card-body">

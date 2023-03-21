@@ -8,6 +8,7 @@ if (!isset($_COOKIE["login"])) {
 $user = "";
 $id = 0;
 $products = [];
+$conn->query("SET NAMES 'utf8'");
 ?>
 
 <?php

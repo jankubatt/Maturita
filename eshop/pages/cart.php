@@ -1,5 +1,6 @@
 <?php
 require_once "../script/conn.php";
+$conn->query("SET NAMES 'utf8'");
 if (!isset($_COOKIE["login"])) {
   header("Location: " . "index.html");
   exit();

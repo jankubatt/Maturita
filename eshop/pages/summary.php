@@ -32,6 +32,8 @@ if ($result->num_rows > 0) {
     }
   }
 }
+
+$conn->query("SET NAMES 'utf8'");
 ?>
 
 <!DOCTYPE html>
